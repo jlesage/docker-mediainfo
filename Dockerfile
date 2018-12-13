@@ -8,7 +8,7 @@
 FROM jlesage/baseimage-gui:alpine-3.8-v3.5.1
 
 # Define software versions.
-ARG MEDIAINFO_VERSION=18.08.1
+ARG MEDIAINFO_VERSION=18.12
 
 # Define software download URLs.
 ARG MEDIAINFO_URL=https://github.com/MediaArea/MediaInfo/archive/v${MEDIAINFO_VERSION}.tar.gz
