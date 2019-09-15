@@ -4,6 +4,8 @@
 # https://github.com/jlesage/docker-mediainfo
 #
 
+ARG DOCKER_IMAGE_VERSION=unknown
+
 # Pull base image.
 FROM jlesage/baseimage-gui:alpine-3.9-v3.5.2
 
@@ -66,6 +68,6 @@ VOLUME ["/storage"]
 LABEL \
       org.label-schema.name="mediainfo" \
       org.label-schema.description="Docker container for MediaInfo" \
-      org.label-schema.version="unknown" \
+      org.label-schema.version="$DOCKER_IMAGE_VERSION" \
       org.label-schema.vcs-url="https://github.com/jlesage/docker-mediainfo" \
       org.label-schema.schema-version="1.0"
