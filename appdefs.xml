@@ -27,6 +27,15 @@ from Jinja2 templates.
     <!-- Changelog of the application. -->
     <history>
       <release>
+        <version>1.5.0</version>
+        <date>2020-09-10</date>
+        <change>Upgraded MediaInfo to version 20.08.</change>
+        <change>Now using baseimage v3.5.6, based on Alpine 3.12, which brings the following changes:</change>
+        <change level="2">Upgraded glibc to version 2.31 on Alpine Linux images with glibc integrated.</change>
+        <change level="2">Updated installed packages to get latest security fixes.</change>
+        <change level="2">Adjusted the log monitor target for recent versions of YAD.</change>
+      </release>
+      <release>
         <version>1.4.0</version>
         <date>2020-04-05</date>
         <change>Upgraded MediaInfo to version 20.03.</change>
