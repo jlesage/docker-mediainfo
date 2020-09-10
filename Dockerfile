@@ -11,7 +11,7 @@ FROM jlesage/baseimage-gui:alpine-3.12-v3.5.6
 ARG DOCKER_IMAGE_VERSION=unknown
 
 # Define software versions.
-ARG MEDIAINFO_VERSION=20.03
+ARG MEDIAINFO_VERSION=20.08
 
 # Define software download URLs.
 ARG MEDIAINFO_URL=https://github.com/MediaArea/MediaInfo/archive/v${MEDIAINFO_VERSION}.tar.gz
