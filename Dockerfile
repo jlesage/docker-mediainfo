@@ -15,13 +15,16 @@ ARG MEDIAINFO_VERSION=20.09
 
 # Define software download URLs.
 ARG MEDIAINFO_URL=https://github.com/MediaArea/MediaInfo/archive/v${MEDIAINFO_VERSION}.tar.gz
+ARG MEDIAINFOLIB_URL=https://mediaarea.net/download/source/libmediainfo/${MEDIAINFO_VERSION}/libmediainfo_${MEDIAINFO_VERSION}.tar.xz
 
 # Define working directory.
 WORKDIR /tmp
 
 # Install dependencies.
 RUN add-pkg \
-        mediainfo \
+        libzen \
+        libcurl \
+        tinyxml2 \
         mesa-dri-swrast \
         qt5-qtsvg
 
@@ -31,23 +34,76 @@ RUN \
     add-pkg --virtual build-dependencies \
         build-base \
         curl \
+        cmake \
+        automake \
+        autoconf \
+        libtool \
+        curl-dev \
+        libmms-dev \
+        libzen-dev \
+        tinyxml2-dev \
         qt5-qtbase-dev \
-        libmediainfo-dev \
         && \
-    # Download sources.
+    # Set same default compilation flags as abuild.
+    export CFLAGS="-Os -fomit-frame-pointer" && \
+    export CXXFLAGS="$CFLAGS" && \
+    export CPPFLAGS="$CFLAGS" && \
+    export LDFLAGS="-Wl,--as-needed" && \
+    # Download MediaInfoLib.
+    echo "Downloading MediaInfoLib package..." && \
+    mkdir MediaInfoLib && \
+    curl -# -L ${MEDIAINFOLIB_URL} | tar xJ --strip 1 -C MediaInfoLib && \
+    rm -r \
+        MediaInfoLib/Project/MS* \
+        MediaInfoLib/Project/zlib \
+        MediaInfoLib/Source/ThirdParty/tinyxml2 \
+        && \
+    # Compile MediaInfoLib.
+    echo "Compiling MediaInfoLib..." && \
+    cd MediaInfoLib/Project/CMake && \
+    cmake -DCMAKE_BUILD_TYPE=None \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_VERBOSE_MAKEFILE=ON \
+          -DBUILD_SHARED_LIBS=ON \
+          && \
+    make -j$(nproc) install && \
+    cd ../../../ && \
+    # Download MediaInfo.
     echo "Downloading MediaInfo package..." && \
-    mkdir mediainfo && \
-    curl -# -L ${MEDIAINFO_URL} | tar xz --strip 1 -C mediainfo && \
-    # Compile.
-    cd mediainfo/Project/QMake/GUI && \
+    mkdir MediaInfo && \
+    curl -# -L ${MEDIAINFO_URL} | tar xz --strip 1 -C MediaInfo && \
+    # Compile the GUI.
+    echo "Compiling MediaInfo GUI..." && \
+    cd MediaInfo/Project/QMake/GUI && \
     /usr/lib/qt5/bin/qmake && \
     make -j$(nproc) install && \
     cd ../../../../ && \
-    # Install
+    # Compile the CLI.
+    echo "Compiling MediaInfo CLI..." && \
+    cd MediaInfo/Project/GNU/CLI && \
+    ./autogen.sh && \
+    ./configure \
+        --prefix=/usr \
+        --enable-static=no \
+        && \
+    make -j$(nproc) install && \
+    # Strip binaries.
+    strip -v /usr/bin/mediainfo && \
     strip -v /usr/bin/mediainfo-gui && \
+    strip -v /usr/lib/libmediainfo.so && \
     cd ../ && \
     # Cleanup.
     del-pkg build-dependencies && \
+    rm -r \
+        /usr/include/MediaInfo \
+        /usr/lib/cmake/mediainfolib \
+        /usr/lib/pkgconfig/libmediainfo.pc \
+        && \
+    rm -r \
+        /usr/include \
+        /usr/lib/cmake \
+        /usr/lib/pkgconfig \
+        && \
     rm -rf /tmp/* /tmp/.[!.]*
 
 # Generate and install favicons.
