@@ -93,17 +93,13 @@ RUN \
     strip -v /usr/lib/libmediainfo.so && \
     cd ../ && \
     # Cleanup.
-    del-pkg build-dependencies && \
     rm -r \
         /usr/include/MediaInfo \
+        /usr/include/MediaInfoDLL \
         /usr/lib/cmake/mediainfolib \
         /usr/lib/pkgconfig/libmediainfo.pc \
         && \
-    rm -r \
-        /usr/include \
-        /usr/lib/cmake \
-        /usr/lib/pkgconfig \
-        && \
+    del-pkg build-dependencies && \
     rm -rf /tmp/* /tmp/.[!.]*
 
 # Generate and install favicons.
