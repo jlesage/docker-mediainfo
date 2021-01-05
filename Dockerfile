@@ -63,7 +63,7 @@ RUN \
     cd MediaInfoLib/Project/CMake && \
     cmake -DCMAKE_BUILD_TYPE=None \
           -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_VERBOSE_MAKEFILE=ON \
+          -DCMAKE_VERBOSE_MAKEFILE=OFF \
           -DBUILD_SHARED_LIBS=ON \
           && \
     make -j$(nproc) install && \
