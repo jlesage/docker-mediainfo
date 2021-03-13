@@ -1,5 +1,5 @@
 # Docker container for MediaInfo
-[![Docker Image Size](https://img.shields.io/microbadger/image-size/jlesage/mediainfo)](http://microbadger.com/#/images/jlesage/mediainfo) [![Build Status](https://drone.le-sage.com/api/badges/jlesage/docker-mediainfo/status.svg)](https://drone.le-sage.com/jlesage/docker-mediainfo) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-mediainfo.svg)](https://github.com/jlesage/docker-mediainfo/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage/0usd)
+[![Docker Image Size](https://img.shields.io/docker/image-size/jlesage/mediainfo/latest)](https://hub.docker.com/r/jlesage/mediainfo/tags) [![Build Status](https://drone.le-sage.com/api/badges/jlesage/docker-mediainfo/status.svg)](https://drone.le-sage.com/jlesage/docker-mediainfo) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-mediainfo.svg)](https://github.com/jlesage/docker-mediainfo/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage/0usd)
 
 This is a Docker container for [MediaInfo](https://mediaarea.net/en/MediaInfo).
 
