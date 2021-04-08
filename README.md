@@ -162,7 +162,6 @@ version: '3'
 services:
   mediainfo:
     image: jlesage/mediainfo
-    build: .
     ports:
       - "5800:5800"
     volumes:
