@@ -27,6 +27,11 @@ from Jinja2 templates.
     <!-- Changelog of the application. -->
     <history>
       <release>
+        <version>1.8.0</version>
+        <date>2021-10-12</date>
+        <change>Updated MediaInfo to version 21.09.</change>
+      </release>
+      <release>
         <version>1.7.1</version>
         <date>2021-04-13</date>
         <change>Now using baseimage version 3.5.7, which brings the following change:</change>
