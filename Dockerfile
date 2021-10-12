@@ -11,7 +11,7 @@ FROM jlesage/baseimage-gui:alpine-3.12-v3.5.7
 ARG DOCKER_IMAGE_VERSION=unknown
 
 # Define software versions.
-ARG MEDIAINFO_VERSION=21.03
+ARG MEDIAINFO_VERSION=21.09
 
 # Define software download URLs.
 ARG MEDIAINFO_URL=https://github.com/MediaArea/MediaInfo/archive/v${MEDIAINFO_VERSION}.tar.gz
@@ -58,6 +58,9 @@ RUN \
         MediaInfoLib/Project/zlib \
         MediaInfoLib/Source/ThirdParty/tinyxml2 \
         && \
+    cd MediaInfoLib && \
+    curl -# -L https://github.com/MediaArea/MediaInfoLib/commit/cd6d5cb1cfe03d4fcef8fd38decd04765c19890a.patch | patch -p1 && \
+    cd .. && \
     # Compile MediaInfoLib.
     echo "Compiling MediaInfoLib..." && \
     cd MediaInfoLib/Project/CMake && \
