@@ -27,6 +27,13 @@ from Jinja2 templates.
     <!-- Changelog of the application. -->
     <history>
       <release>
+        <version>1.10.0</version>
+        <date>2022-06-28</date>
+        <change>Updated MediaInfo to version 22.06.</change>
+        <change>Now using baseimage version 3.5.8, based on Alpine Linux 3.14, which brings the following changes:</change>
+        <change level="2">Updated installed packages to get latest security fixes.</change>
+      </release>
+      <release>
         <version>1.9.0</version>
         <date>2022-04-05</date>
         <change>Updated MediaInfo to version 22.03.</change>
