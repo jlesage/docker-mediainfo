@@ -27,6 +27,11 @@ from Jinja2 templates.
     <!-- Changelog of the application. -->
     <history>
       <release>
+        <version>1.11.0</version>
+        <date>2022-10-09</date>
+        <change>Updated MediaInfo to version 22.09.</change>
+      </release>
+      <release>
         <version>1.10.0</version>
         <date>2022-06-28</date>
         <change>Updated MediaInfo to version 22.06.</change>
