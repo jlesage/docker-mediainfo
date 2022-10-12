@@ -4,105 +4,57 @@
 # https://github.com/jlesage/docker-mediainfo
 #
 
-# Pull base image.
-FROM jlesage/baseimage-gui:alpine-3.14-v3.5.8
-
 # Docker image version is provided via build arg.
-ARG DOCKER_IMAGE_VERSION=unknown
+ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
 ARG MEDIAINFO_VERSION=22.09
+ARG MEDIAINFOLIB_VERSION=22.09
+ARG ZENLIB_VERSION=0.4.39
 
 # Define software download URLs.
-ARG MEDIAINFO_URL=https://github.com/MediaArea/MediaInfo/archive/v${MEDIAINFO_VERSION}.tar.gz
-ARG MEDIAINFOLIB_URL=https://mediaarea.net/download/source/libmediainfo/${MEDIAINFO_VERSION}/libmediainfo_${MEDIAINFO_VERSION}.tar.xz
+ARG MEDIAINFO_URL=https://mediaarea.net/download/source/mediainfo/${MEDIAINFO_VERSION}/mediainfo_${MEDIAINFO_VERSION}.tar.gz
+ARG MEDIAINFOLIB_URL=https://mediaarea.net/download/source/libmediainfo/${MEDIAINFO_VERSION}/libmediainfo_${MEDIAINFOLIB_VERSION}.tar.xz
+ARG ZENLIB_URL=https://mediaarea.net/download/source/libzen/${ZENLIB_VERSION}/libzen_${ZENLIB_VERSION}.tar.gz
+
+# Get Dockerfile cross-compilation helpers.
+FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
+
+# Build MediaInfo.
+FROM --platform=$BUILDPLATFORM alpine:3.16 AS mediainfo
+ARG TARGETPLATFORM
+ARG MEDIAINFO_URL
+ARG MEDIAINFOLIB_URL
+ARG ZENLIB_URL
+COPY --from=xx / /
+COPY src/mediainfo /build
+RUN /build/build.sh "$MEDIAINFO_URL" "$MEDIAINFOLIB_URL" "$ZENLIB_URL"
+RUN xx-verify \
+    /tmp/mediainfo-install/usr/bin/mediainfo \
+    /tmp/mediainfo-install/usr/bin/mediainfo-gui \
+    /tmp/mediainfo-install/usr/lib/libmediainfo.so \
+    /tmp/mediainfo-install/usr/lib/libzen.so
+
+# Pull base image.
+FROM jlesage/baseimage-gui:alpine-3.16-v4.0.4
+
+ARG MEDIAINFO_VERSION
+ARG DOCKER_IMAGE_VERSION
 
 # Define working directory.
 WORKDIR /tmp
 
 # Install dependencies.
 RUN add-pkg \
-        libzen \
-        libcurl \
         tinyxml2 \
+        qt5-qtbase-x11 \
+        mesa-gl \
         mesa-dri-swrast \
-        qt5-qtsvg
-
-# Compile and install MediaInfo.
-RUN \
-    # Install packages needed by the build.
-    add-pkg --virtual build-dependencies \
-        build-base \
-        curl \
-        cmake \
-        automake \
-        autoconf \
-        libtool \
-        curl-dev \
-        libmms-dev \
-        libzen-dev \
-        tinyxml2-dev \
-        qt5-qtbase-dev \
+        # A font is needed.
+        font-croscore \
         && \
-    # Set same default compilation flags as abuild.
-    export CFLAGS="-Os -fomit-frame-pointer" && \
-    export CXXFLAGS="$CFLAGS" && \
-    export CPPFLAGS="$CFLAGS" && \
-    export LDFLAGS="-Wl,--as-needed" && \
-    # Download MediaInfoLib.
-    echo "Downloading MediaInfoLib package..." && \
-    mkdir MediaInfoLib && \
-    curl -# -L ${MEDIAINFOLIB_URL} | tar xJ --strip 1 -C MediaInfoLib && \
-    rm -r \
-        MediaInfoLib/Project/MS* \
-        MediaInfoLib/Project/zlib \
-        MediaInfoLib/Source/ThirdParty/tinyxml2 \
-        && \
-    cd MediaInfoLib && \
-    cd .. && \
-    # Compile MediaInfoLib.
-    echo "Compiling MediaInfoLib..." && \
-    cd MediaInfoLib/Project/CMake && \
-    cmake -DCMAKE_BUILD_TYPE=None \
-          -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_VERBOSE_MAKEFILE=OFF \
-          -DBUILD_SHARED_LIBS=ON \
-          && \
-    make -j$(nproc) install && \
-    cd ../../../ && \
-    # Download MediaInfo.
-    echo "Downloading MediaInfo package..." && \
-    mkdir MediaInfo && \
-    curl -# -L ${MEDIAINFO_URL} | tar xz --strip 1 -C MediaInfo && \
-    # Compile the GUI.
-    echo "Compiling MediaInfo GUI..." && \
-    cd MediaInfo/Project/QMake/GUI && \
-    /usr/lib/qt5/bin/qmake && \
-    make -j$(nproc) install && \
-    cd ../../../../ && \
-    # Compile the CLI.
-    echo "Compiling MediaInfo CLI..." && \
-    cd MediaInfo/Project/GNU/CLI && \
-    ./autogen.sh && \
-    ./configure \
-        --prefix=/usr \
-        --enable-static=no \
-        && \
-    make -j$(nproc) install && \
-    # Strip binaries.
-    strip -v /usr/bin/mediainfo && \
-    strip -v /usr/bin/mediainfo-gui && \
-    strip -v /usr/lib/libmediainfo.so && \
-    cd ../ && \
-    # Cleanup.
-    rm -r \
-        /usr/include/MediaInfo \
-        /usr/include/MediaInfoDLL \
-        /usr/lib/cmake/mediainfolib \
-        /usr/lib/pkgconfig/libmediainfo.pc \
-        && \
-    del-pkg build-dependencies && \
-    rm -rf /tmp/* /tmp/.[!.]*
+    # Save some space by removing unused DRI drivers.
+    find /usr/lib/xorg/modules/dri/ -type f ! -name swrast_dri.so -exec echo "Removing {}..." ';' -delete
 
 # Generate and install favicons.
 RUN \
@@ -111,18 +63,23 @@ RUN \
 
 # Add files.
 COPY rootfs/ /
+COPY --from=mediainfo /tmp/mediainfo-install/usr/bin /usr/bin
+COPY --from=mediainfo /tmp/mediainfo-install/usr/lib /usr/lib/
 
-# Set environment variables.
-ENV APP_NAME="MediaInfo"
+# Set internal environment variables.
+RUN \
+    set-cont-env APP_NAME "MediaInfo" && \
+    set-cont-env APP_VERSION "$MEDIAINFO_VERSION" && \
+    set-cont-env DOCKER_IMAGE_VERSION "$DOCKER_IMAGE_VERSION" && \
+    true
 
 # Define mountable directories.
-VOLUME ["/config"]
 VOLUME ["/storage"]
 
 # Metadata.
 LABEL \
       org.label-schema.name="mediainfo" \
       org.label-schema.description="Docker container for MediaInfo" \
-      org.label-schema.version="$DOCKER_IMAGE_VERSION" \
+      org.label-schema.version="${DOCKER_IMAGE_VERSION:-unknown}" \
       org.label-schema.vcs-url="https://github.com/jlesage/docker-mediainfo" \
       org.label-schema.schema-version="1.0"
