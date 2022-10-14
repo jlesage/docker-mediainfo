@@ -21,6 +21,15 @@ app:
     category: "Tools:"
   documentation:
   changelog:
+    - version: 22.10.1
+      date: 2022-10-14
+      changes:
+        - 'Versioning scheme changed to `YY.MM.SEQUENCE`.'
+        - 'Update of the baseimage to version 4.0.4 brings the following new features:'
+        - '2:Multi-arch image support.'
+        - '2:Support for dark mode.'
+        - '2:Support for remote window resize.'
+        - '2:Updated the web UI with a new, simplified and less intrusive look.'
     - version: 1.11.0
       date: 2022-10-09
       changes:
