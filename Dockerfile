@@ -48,6 +48,7 @@ WORKDIR /tmp
 RUN add-pkg \
         tinyxml2 \
         qt5-qtbase-x11 \
+        adwaita-qt \
         mesa-gl \
         mesa-dri-swrast \
         # A font is needed.
