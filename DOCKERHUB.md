@@ -8,7 +8,7 @@ installation or configuration needed on the client side) or via any VNC client.
 
 ---
 
-[![MediaInfo logo](https://images.weserv.nl/?url=raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/mediainfo-icon.png&w=200)](https://mediaarea.net/en/MediaInfo)[![MediaInfo](https://images.placeholders.dev/?width=288&height=110&fontFamily=Georgia,sans-serif&fontWeight=400&fontSize=52&text=MediaInfo&bgColor=rgba(0,0,0,0.0)&textColor=rgba(121,121,121,1))](https://mediaarea.net/en/MediaInfo)
+[![MediaInfo logo](https://images.weserv.nl/?url=raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/mediainfo-icon.png&w=110)](https://mediaarea.net/en/MediaInfo)[![MediaInfo](https://images.placeholders.dev/?width=288&height=110&fontFamily=Georgia,sans-serif&fontWeight=400&fontSize=52&text=MediaInfo&bgColor=rgba(0,0,0,0.0)&textColor=rgba(121,121,121,1))](https://mediaarea.net/en/MediaInfo)
 
 MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files.
 
