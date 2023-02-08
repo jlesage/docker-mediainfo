@@ -51,13 +51,13 @@ docker run -d \
     --name=mediainfo \
     -p 5800:5800 \
     -v /docker/appdata/mediainfo:/config:rw \
-    -v $HOME:/storage:ro \
+    -v /home/user:/storage:ro \
     jlesage/mediainfo
 ```
 
 Where:
   - `/docker/appdata/mediainfo`: This is where the application stores its configuration, states, log and any files needing persistency.
-  - `$HOME`: This location contains files from your host that need to be accessible to the application.
+  - `/home/user`: This location contains files from your host that need to be accessible to the application.
 
 Browse to `http://your-host-ip:5800` to access the MediaInfo GUI.
 Files from the host appear under the `/storage` folder in the container.
@@ -210,7 +210,7 @@ services:
       - "5800:5800"
     volumes:
       - "/docker/appdata/mediainfo:/config:rw"
-      - "$HOME:/storage:ro"
+      - "/home/user:/storage:ro"
 ```
 
 ## Docker Image Versioning
