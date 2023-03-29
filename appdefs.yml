@@ -21,6 +21,10 @@ app:
     category: "Tools:"
   documentation:
   changelog:
+    - version: 23.03.2
+      date: 2023-03-29
+      changes:
+        - 'Updated MediaInfo to version 23.03.'
     - version: 23.03.1
       date: 2023-03-05
       changes:
