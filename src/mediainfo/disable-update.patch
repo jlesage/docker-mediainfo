@@ -1,0 +1,16 @@
+--- a/Source/GUI/Qt/about.ui	2023-03-29 08:38:35.727319068 -0400
++++ b/Source/GUI/Qt/about.ui	2023-03-29 08:38:41.721855402 -0400
+@@ -159,13 +159,6 @@
+         </widget>
+        </item>
+        <item>
+-        <widget class="QPushButton" name="checkversion">
+-         <property name="text">
+-          <string>Check for new version</string>
+-         </property>
+-        </widget>
+-       </item>
+-       <item>
+         <widget class="QPushButton" name="donate">
+          <property name="text">
+           <string>Donate</string>

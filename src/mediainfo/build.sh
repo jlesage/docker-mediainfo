@@ -12,6 +12,8 @@ export LDFLAGS="-Wl,--strip-all -Wl,--as-needed"
 export CC=xx-clang
 export CXX=xx-clang++
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 function log {
     echo ">>> $*"
 }
@@ -42,6 +44,7 @@ apk --no-cache add \
     curl \
     clang \
     make \
+    patch \
     autoconf \
     automake \
     libtool \
@@ -126,6 +129,9 @@ make DESTDIR=/tmp/mediainfo-install -C /tmp/MediaInfoLib/Project/GNU/Library ins
 # Compile MediaInfo GUI
 # NOTE: The UI under MediaInfo/Project/GNU/GUI is not the correct one!
 #
+
+log "Patching MediaInfo GUI..."
+patch -p1 -d /tmp/MediaInfo < "$SCRIPT_DIR"/disable-update.patch
 
 log "Configuring MediaInfo GUI..."
 sed -i 's/$${CROSS_COMPILE}clang/xx-clang/g' /usr/lib/qt5/mkspecs/common/clang.conf
