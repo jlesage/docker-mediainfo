@@ -10,7 +10,7 @@ ARG DOCKER_IMAGE_VERSION=
 # Define software versions.
 ARG MEDIAINFO_VERSION=23.03
 ARG MEDIAINFOLIB_VERSION=23.03
-ARG ZENLIB_VERSION=0.4.40
+ARG ZENLIB_VERSION=0.4.41
 
 # Define software download URLs.
 ARG MEDIAINFO_URL=https://mediaarea.net/download/source/mediainfo/${MEDIAINFO_VERSION}/mediainfo_${MEDIAINFO_VERSION}.tar.gz
