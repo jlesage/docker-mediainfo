@@ -1,5 +1,11 @@
 # Docker container for MediaInfo
-[![Docker Image Size](https://img.shields.io/docker/image-size/jlesage/mediainfo/latest)](https://hub.docker.com/r/jlesage/mediainfo/tags) [![Build Status](https://github.com/jlesage/docker-mediainfo/actions/workflows/build-image.yml/badge.svg?branch=master)](https://github.com/jlesage/docker-mediainfo/actions/workflows/build-image.yml) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-mediainfo.svg)](https://github.com/jlesage/docker-mediainfo/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage)
+[![Release](https://img.shields.io/github/release/jlesage/docker-mediainfo.svg?logo=github&style=for-the-badge)](https://github.com/jlesage/docker-mediainfo/releases/latest)
+[![Docker Image Size](https://img.shields.io/docker/image-size/jlesage/mediainfo/latest?logo=docker&style=for-the-badge)](https://hub.docker.com/r/jlesage/mediainfo/tags)
+[![Docker Pulls](https://img.shields.io/docker/pulls/jlesage/mediainfo?label=Pulls&logo=docker&style=for-the-badge)](https://hub.docker.com/r/jlesage/mediainfo)
+[![Docker Stars](https://img.shields.io/docker/stars/jlesage/mediainfo?label=Stars&logo=docker&style=for-the-badge)](https://hub.docker.com/r/jlesage/mediainfo)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/jlesage/docker-mediainfo/build-image.yml?logo=github&branch=master&style=for-the-badge)](https://github.com/jlesage/docker-mediainfo/actions/workflows/build-image.yml)
+[![Source](https://img.shields.io/badge/Source-GitHub-blue?logo=github&style=for-the-badge)](https://github.com/jlesage/docker-mediainfo)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=for-the-badge)](https://paypal.me/JocelynLeSage)
 
 This is a Docker container for [MediaInfo](https://mediaarea.net/en/MediaInfo).
 
