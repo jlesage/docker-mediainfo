@@ -12,6 +12,7 @@ app:
   name: mediainfo
   friendly_name: MediaInfo
   gui_type: x11
+  base_os: alpine
   project:
     description: |-
       MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files.
