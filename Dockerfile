@@ -36,7 +36,7 @@ RUN xx-verify \
     /tmp/mediainfo-install/usr/lib/libzen.so
 
 # Pull base image.
-FROM jlesage/baseimage-gui:alpine-3.16-v4.5.3
+FROM jlesage/baseimage-gui:alpine-3.16-v4.6.3
 
 ARG MEDIAINFO_VERSION
 ARG DOCKER_IMAGE_VERSION
@@ -49,13 +49,8 @@ RUN add-pkg \
         tinyxml2 \
         qt6-qtbase-x11 \
         adwaita-qt \
-        mesa-gl \
-        mesa-dri-gallium \
         # A font is needed.
-        font-croscore \
-        && \
-    # Save some space by removing unused DRI drivers.
-    find /usr/lib/xorg/modules/dri/ -type f ! -name swrast_dri.so -exec echo "Removing {}..." ';' -delete
+        font-croscore
 
 # Generate and install favicons.
 RUN \
