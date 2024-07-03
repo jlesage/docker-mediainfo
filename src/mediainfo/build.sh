@@ -49,8 +49,7 @@ apk --no-cache add \
     automake \
     libtool \
     pkgconf \
-    qtchooser \
-    qt5-qtbase-dev \
+    qt6-qtbase-dev \
 
 xx-apk --no-cache --no-scripts add \
     musl-dev \
@@ -58,7 +57,7 @@ xx-apk --no-cache --no-scripts add \
     g++ \
     tinyxml2-dev \
     zlib-dev \
-    qt5-qtbase-dev \
+    qt6-qtbase-dev \
 
 #
 # Download sources.
@@ -134,12 +133,13 @@ log "Patching MediaInfo GUI..."
 patch -p1 -d /tmp/MediaInfo < "$SCRIPT_DIR"/disable-update.patch
 
 log "Configuring MediaInfo GUI..."
-sed -i 's/$${CROSS_COMPILE}clang/xx-clang/g' /usr/lib/qt5/mkspecs/common/clang.conf
+sed -i 's/$${CROSS_COMPILE}clang/xx-clang/g' /usr/lib/qt6/mkspecs/common/clang.conf
 (
     cd /tmp/MediaInfo/Project/QMake/GUI && \
-    qmake -spec linux-clang
+    /usr/lib/qt6/bin/qmake -spec linux-clang
 )
-sed -i "s| /usr/lib/libQt5| $(xx-info sysroot)usr/lib/libQt5|g" /tmp/MediaInfo/Project/QMake/GUI/Makefile
+sed -i "s| /usr/lib/libQt6| $(xx-info sysroot)usr/lib/libQt6|g" /tmp/MediaInfo/Project/QMake/GUI/Makefile
+sed -i "s| /usr/lib/libGL.so | $(xx-info sysroot)/usr/lib/libGL.so |g" /tmp/MediaInfo/Project/QMake/GUI/Makefile
 sed -i "s|LFLAGS        = .*|LFLAGS        = $LDFLAGS|" /tmp/MediaInfo/Project/QMake/GUI/Makefile
 
 log "Compiling MediaInfo GUI..."

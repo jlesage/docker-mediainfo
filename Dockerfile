@@ -8,8 +8,8 @@
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG MEDIAINFO_VERSION=24.05
-ARG MEDIAINFOLIB_VERSION=24.05
+ARG MEDIAINFO_VERSION=24.06
+ARG MEDIAINFOLIB_VERSION=24.06
 ARG ZENLIB_VERSION=0.4.41
 
 # Define software download URLs.
@@ -47,7 +47,7 @@ WORKDIR /tmp
 # Install dependencies.
 RUN add-pkg \
         tinyxml2 \
-        qt5-qtbase-x11 \
+        qt6-qtbase-x11 \
         adwaita-qt \
         mesa-gl \
         mesa-dri-gallium \
