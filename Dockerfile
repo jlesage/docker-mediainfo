@@ -48,6 +48,7 @@ WORKDIR /tmp
 RUN add-pkg \
         tinyxml2 \
         qt6-qtbase-x11 \
+        qt6-qtsvg \
         adwaita-qt \
         # A font is needed.
         font-croscore
