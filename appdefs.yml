@@ -22,6 +22,12 @@ app:
     category: "Tools:"
   documentation:
   changelog:
+    - version: 24.08.1
+      date: 2024-08-04
+      changes:
+        - 'Fixed issue where toolbar icons were not displayed.'
+        - 'Fixed issue where dark mode was not working.'
+        - 'Use a monospaced font for better visibility of information.'
     - version: 24.07.1
       date: 2024-07-04
       changes:
