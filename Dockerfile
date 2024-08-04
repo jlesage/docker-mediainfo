@@ -21,7 +21,7 @@ ARG ZENLIB_URL=https://mediaarea.net/download/source/libzen/${ZENLIB_VERSION}/li
 FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
 
 # Build MediaInfo.
-FROM --platform=$BUILDPLATFORM alpine:3.16 AS mediainfo
+FROM --platform=$BUILDPLATFORM alpine:3.20 AS mediainfo
 ARG TARGETPLATFORM
 ARG MEDIAINFO_URL
 ARG MEDIAINFOLIB_URL
@@ -36,7 +36,7 @@ RUN xx-verify \
     /tmp/mediainfo-install/usr/lib/libzen.so
 
 # Pull base image.
-FROM jlesage/baseimage-gui:alpine-3.16-v4.6.3
+FROM jlesage/baseimage-gui:alpine-3.20-v4.6.3
 
 ARG MEDIAINFO_VERSION
 ARG DOCKER_IMAGE_VERSION
