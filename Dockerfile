@@ -51,7 +51,7 @@ RUN add-pkg \
         qt6-qtsvg \
         adwaita-qt \
         # A font is needed.
-        font-croscore
+        font-roboto-mono
 
 # Generate and install favicons.
 RUN \
@@ -61,7 +61,7 @@ RUN \
 # Add files.
 COPY rootfs/ /
 COPY --from=mediainfo /tmp/mediainfo-install/usr/bin /usr/bin
-COPY --from=mediainfo /tmp/mediainfo-install/usr/lib /usr/lib/
+COPY --from=mediainfo /tmp/mediainfo-install/usr/lib /usr/lib
 
 # Set internal environment variables.
 RUN \
