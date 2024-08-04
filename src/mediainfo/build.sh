@@ -12,6 +12,8 @@ export LDFLAGS="-Wl,--strip-all -Wl,--as-needed"
 export CC=xx-clang
 export CXX=xx-clang++
 
+export PKG_CONFIG_PATH=/$(xx-info)/usr/lib/pkgconfig
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 function log {
@@ -44,6 +46,8 @@ apk --no-cache add \
     curl \
     clang \
     make \
+    cmake \
+    ninja \
     patch \
     autoconf \
     automake \
@@ -80,49 +84,32 @@ mkdir /tmp/ZenLib
 curl -# -L -f ${ZENLIB_URL} | tar xz --strip 1 -C /tmp/ZenLib
 
 #
-# Compile ZenLib
-#
-
-log "Configuring ZenLib..."
-(
-    cd /tmp/ZenLib/Project/GNU/Library && \
-    ./autogen.sh && \
-    ./configure \
-        --build=$(TARGETPLATFORM= xx-clang --print-target-triple) \
-        --host=$(xx-clang --print-target-triple) \
-        --prefix=/usr \
-        --disable-static \
-        --enable-shared \
-)
-
-log "Compiling ZenLib..."
-make -C /tmp/ZenLib/Project/GNU/Library -j$(nproc)
-
-log "Installing ZenLib..."
-make DESTDIR=/tmp/mediainfo-install -C /tmp/ZenLib/Project/GNU/Library install
-
-#
 # Compile MediaInfoLib
 #
 
 log "Configuring MediaInfoLib..."
 (
-    cd /tmp/MediaInfoLib/Project/GNU/Library && \
-    ./autogen.sh && \
-    ./configure \
-        --build=$(TARGETPLATFORM= xx-clang --print-target-triple) \
-        --host=$(xx-clang --print-target-triple) \
-        --prefix=/usr \
-        --disable-static \
-        --enable-shared \
-        --with-libtinyxml2 \
+    cd /tmp/MediaInfoLib && \
+    cmake -G Ninja -S Project/CMake -B build \
+        $(xx-clang --print-cmake-defines) \
+        -DCMAKE_FIND_ROOT_PATH=$(xx-info sysroot) \
+        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+        -DCMAKE_BUILD_TYPE=MinSizeRel \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DBUILD_SHARED_LIBS=ON \
+        -DBUILD_ZENLIB=ON \
 )
 
 log "Compiling MediaInfoLib..."
-make -C /tmp/MediaInfoLib/Project/GNU/Library -j$(nproc)
+cmake --build /tmp/MediaInfoLib/build
 
 log "Installing MediaInfoLib..."
-make DESTDIR=/tmp/mediainfo-install -C /tmp/MediaInfoLib/Project/GNU/Library install
+DESTDIR=/tmp/mediainfo-install cmake --install /tmp/MediaInfoLib/build
+DESTDIR=$(xx-info sysroot) cmake --install /tmp/MediaInfoLib/build
 
 #
 # Compile MediaInfo GUI
