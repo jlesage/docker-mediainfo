@@ -50,6 +50,9 @@ RUN add-pkg \
         qt6-qtbase-x11 \
         qt6-qtsvg \
         adwaita-qt \
+        # mesa-gl dependency is not automatically pulled with some architectures
+        # (e.g. arm64).
+        mesa-gl \
         # A font is needed.
         font-roboto-mono
 
