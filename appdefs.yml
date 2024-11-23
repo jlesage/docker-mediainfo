@@ -22,6 +22,10 @@ app:
     category: "Tools:"
   documentation:
   changelog:
+    - version: 24.11.2
+      date: 2024-11-23
+      changes:
+        - 'Fixed MediaInfo not starting properly on some architectures.'
     - version: 24.11.1
       date: 2024-11-18
       changes:
