@@ -54,7 +54,10 @@ RUN add-pkg \
         # (e.g. arm64).
         mesa-gl \
         # A font is needed.
-        font-roboto-mono
+        font-roboto-mono \
+        # fonts for Chinese.
+        ttf-dejavu \
+        font-noto-cjk
 
 # Generate and install favicons.
 RUN \
