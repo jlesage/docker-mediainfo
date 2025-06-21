@@ -13,9 +13,9 @@ ARG MEDIAINFOLIB_VERSION=25.04
 ARG ZENLIB_VERSION=0.4.41
 
 # Define software download URLs.
-ARG MEDIAINFO_URL=https://mediaarea.net/download/source/mediainfo/${MEDIAINFO_VERSION}/mediainfo_${MEDIAINFO_VERSION}.tar.gz
-ARG MEDIAINFOLIB_URL=https://mediaarea.net/download/source/libmediainfo/${MEDIAINFO_VERSION}/libmediainfo_${MEDIAINFOLIB_VERSION}.tar.gz
-ARG ZENLIB_URL=https://mediaarea.net/download/source/libzen/${ZENLIB_VERSION}/libzen_${ZENLIB_VERSION}.tar.gz
+ARG MEDIAINFO_URL=https://github.com/MediaArea/MediaInfo/archive/refs/tags/v${MEDIAINFO_VERSION}.tar.gz
+ARG MEDIAINFOLIB_URL=https://github.com/MediaArea/MediaInfoLib/archive/refs/tags/v${MEDIAINFOLIB_VERSION}.tar.gz
+ARG ZENLIB_URL=https://github.com/MediaArea/ZenLib/archive/refs/tags/v${ZENLIB_VERSION}.tar.gz
 
 # Get Dockerfile cross-compilation helpers.
 FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
