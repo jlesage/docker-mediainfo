@@ -12,6 +12,8 @@ This is a Docker container for [MediaInfo](https://mediaarea.net/en/MediaInfo).
 The graphical user interface (GUI) of the application can be accessed through a
 modern web browser, requiring no installation or configuration on the client
 
+> This Docker container is entirely unofficial and not made by the creators of MediaInfo.
+
 ---
 
 [![MediaInfo logo](https://images.weserv.nl/?url=raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/mediainfo-icon.png&w=110)](https://mediaarea.net/en/MediaInfo)[![MediaInfo](https://images.placeholders.dev/?width=288&height=110&fontFamily=monospace&fontWeight=400&fontSize=52&text=MediaInfo&bgColor=rgba(0,0,0,0.0)&textColor=rgba(121,121,121,1))](https://mediaarea.net/en/MediaInfo)
