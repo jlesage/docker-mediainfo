@@ -22,6 +22,10 @@ app:
     category: "Tools:"
   documentation:
   changelog:
+    - version: 26.02.1
+      date: 2026-02-04
+      changes:
+        - 'Updated MediaInfo to version 26.01.'
     - version: 26.01.1
       date: 2026-01-04
       changes:
